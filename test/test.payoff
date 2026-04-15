@@ -1,0 +1,10 @@
+let strike = 5;
+let strad = Call(strike) + Put(strike);
+ST = 1, 2, 3, 4, 5;
+print(strad);
+
+let mybool = Straddle(5) == Call(5) + Put(5);
+print(mybool);
+
+let s = 10;
+print(strad(s));

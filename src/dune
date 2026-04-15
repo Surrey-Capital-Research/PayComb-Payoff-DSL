@@ -1,0 +1,22 @@
+(ocamllex lexer)
+(menhir
+ (modules parser))
+
+(library
+ (name payoff_lib)
+ (modules lexer parser ast payoff_codegen interpreter))
+
+(executable
+ (name test_lexer)
+ (modules test_lexer)
+ (libraries payoff_lib))
+
+(executable
+ (name test_parser)
+ (modules test_parser)
+ (libraries payoff_lib))
+
+(executable
+ (name main)
+ (modules main)
+ (libraries payoff_lib))

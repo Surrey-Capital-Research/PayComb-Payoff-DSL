@@ -1,0 +1,14 @@
+// Common option strategies
+let K = 100;
+let k_low = 90;
+let k_high = 110;
+
+let strad = Straddle(K);
+let collar = Collar(k_low, k_high);
+let bull_spread = BullCallSpread(k_low, k_high);
+
+ST = 80, 90, 100, 110, 120;
+
+print(strad);
+print(collar);
+print(bull_spread);

@@ -1,0 +1,9 @@
+// Basic Call and Put options
+let K = 100;
+let c = Call(K);
+let p = Put(K);
+
+ST = 80, 90, 100, 110, 120;
+
+print(c);
+print(p);

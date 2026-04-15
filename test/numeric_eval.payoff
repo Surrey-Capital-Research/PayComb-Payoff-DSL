@@ -1,0 +1,15 @@
+// Evaluating payoffs at specific points
+let strike = 50;
+let c = Call(strike);
+let p = Put(strike);
+
+let x = 45;
+let y = 55;
+
+print(c(x));  // 0.00
+print(c(y));  // 5.00
+print(p(x));  // 5.00
+print(p(y));  // 0.00
+
+let combined = c + p;
+print(combined(strike)); // 0.00

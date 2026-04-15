@@ -1,0 +1,22 @@
+# Isabelle
+*.thy.marks
+.thy#
+*.thy~
+
+# Ocaml/Dune
+_build/
+*.install
+.merlin
+*.native
+*.byte
+
+# Build Artifacts
+/payoff_interpreter.exe
+main.exe
+/PayoffGUI.jar
+
+# Java
+/UserInterface/bin/
+*.class
+/UserInterface/nbproject/private/
+/UserInterface/build/

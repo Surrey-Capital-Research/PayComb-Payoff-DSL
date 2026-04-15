@@ -1,0 +1,62 @@
+module Payoff : sig
+  type payoff
+  val put : float -> payoff
+  val call : float -> payoff
+  val eval : payoff -> float -> float
+  val short : payoff -> payoff
+  val long_underlying : payoff
+  val short_call : float -> payoff
+  val long_put : float -> payoff
+  val collar : float -> float -> payoff
+  val long_call : float -> payoff
+  val straddle : float -> payoff
+  val short_put : float -> payoff
+  val long_stock : float -> payoff
+  val short_stock : float -> payoff
+  val short_straddle : float -> payoff
+  val bull_call_spread : float -> float -> payoff
+  val collar_with_entry : float -> float -> float -> payoff
+end = struct
+
+type payoff = Underlying | Const of float | Add of payoff * payoff |
+  Scale of float * payoff | Max of payoff * payoff | Pos of payoff;;
+
+let rec put k = Pos (Add (Const k, Scale ((-. 1.0), Underlying)));;
+
+let rec call k = Pos (Add (Underlying, Scale ((-. 1.0), Const k)));;
+
+let rec eval x0 s = match x0, s with Underlying, s -> s
+               | Const c, uu -> c
+               | Add (p, q), s -> ((eval p s) +. (eval q s))
+               | Scale (c, p), s -> (c *. (eval p s))
+               | Max (p, q), s -> Float.max (eval p s) (eval q s)
+               | Pos p, s -> Float.max (eval p s) 0.0;;
+
+let rec short p = Scale ((-. 1.0), p);;
+
+let long_underlying : payoff = Underlying;;
+
+let rec short_call k = short (call k);;
+
+let rec long_put k = put k;;
+
+let rec collar k1 k2 = Add (long_underlying, Add (long_put k1, short_call k2));;
+
+let rec long_call k = call k;;
+
+let rec straddle k = Add (long_call k, long_put k);;
+
+let rec short_put k = short (put k);;
+
+let rec long_stock s0 = Add (Underlying, Scale ((-. 1.0), Const s0));;
+
+let rec short_stock s0 = short (long_stock s0);;
+
+let rec short_straddle k = short (straddle k);;
+
+let rec bull_call_spread k1 k2 = Add (long_call k1, short_call k2);;
+
+let rec collar_with_entry
+  s0 k1 k2 = Add (long_stock s0, Add (put k1, short_call k2));;
+
+end;; (*struct Payoff*)
